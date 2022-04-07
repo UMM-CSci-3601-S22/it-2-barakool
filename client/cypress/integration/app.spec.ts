@@ -6,27 +6,38 @@ describe('App', () => {
   beforeEach(() => page.navigateTo());
 
   it('Should have the correct title', () => {
-    page.getAppTitle().should('contain', 'CSCI 3601 Iteration Template');
+    page.getAppTitle().should('contain', 'Handy Pantry');
   });
 
-  it('The sidenav should open, navigate to "Users" and back to "Home"', () => {
+  describe('The sidenav should open, navigate to "Products" and back to "Pantry"', () => {
+
+    it('The navigation bar should be invisible by default', () => {
     // Before clicking on the button, the sidenav should be hidden
     page.getSidenav()
-      .should('be.hidden');
+      .should('be.hidden')
+      .and('not.be.visible');
+    });
+
+    it('The navigation bar button should exist', () => {
     page.getSidenavButton()
       .should('be.visible');
+    });
 
+    it('The navigation to products works', () => {
     page.getSidenavButton().click();
-    page.getNavLink('Users').click();
-    cy.url().should('match', /\/users$/);
+    page.getNavLink('Products').click();
+    cy.url().should('match', /\/products$/);
     page.getSidenav()
       .should('be.hidden');
+    });
 
+    it('The navigation to pantry works', () => {
     page.getSidenavButton().click();
-    page.getNavLink('Home').click();
+    page.getNavLink('Pantry').click();
     cy.url().should('match', /^https?:\/\/[^\/]+\/?$/);
     page.getSidenav()
       .should('be.hidden');
+    });
   });
 
 });
