@@ -81,27 +81,6 @@ export class PantryProductsListComponent implements OnInit, OnDestroy {
     // Nothing here – everything is in the injection parameters.
   }
 
-  /*
-  * Get the products in the pantry from the server,
-  */
-  // getPantryItemsFromServer() {
-  //   this.pantryService.getPantryItems().subscribe(returnedPantryProducts => {
-
-  //     this.pantryProducts = returnedPantryProducts;
-  //     this.lengthItems = this.pantryProducts.length;
-  //   }, err => {
-  //     // If there was an error getting the users, log
-  //     // the problem and display a message.
-  //     console.error('We couldn\'t get the list of products in your pantry; the server might be down');
-  //     this.snackBar.open(
-  //       'Problem contacting the server - try again',
-  //       'OK',
-  //       // The message will disappear after 3 seconds.
-  //       { duration: 3000 });
-
-  //   });
-  // }
-
   getItemsFromServer(): void {
     this.unsub();
     this.getItemsSub = this.pantryService.getPantryItems({
@@ -270,6 +249,21 @@ export class PantryProductsListComponent implements OnInit, OnDestroy {
       duration: 5000,
     });
     return this.tempDeleted;
+  }
+
+  openAddDialog(givenProduct: Product) {
+    const dialogRef = this.dialog.open(AddProductToPantryComponent, {data: givenProduct});
+    dialogRef.afterClosed().subscribe(result => {
+      this.pantryService.addPantryItem(result).subscribe(newPantryId => {
+        if(newPantryId) {
+          this.snackBar.open('Product successfully added to your pantry.');
+        }
+        else {
+          this.snackBar.open('Something went wrong.  The product was not added to the pantry.');
+        }
+        this.reloadComponent();
+      });
+    });
   }
 
 }

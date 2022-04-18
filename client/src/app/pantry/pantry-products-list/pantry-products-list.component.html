@@ -20,23 +20,18 @@
               We need to add a router link to the pop-up message for adding a product to the pantry that
               Collin made.
             -->
-              <mat-list-item *ngFor="let product of this.filteredProducts" class="add-product-list-item"
-                data-test="addProductListItem">
-                <p matLine class="add-product-list-name">{{product.product_name}}</p>
-                <div *ngIf="!popup" class="addContainer" style="position: absolute; margin-left: 400px">
-                  <button mat-raised-button class="add-product-button" matTooltip="Add Product"
-                    matTooltipPosition="left" (click)="popup = true" data-test="addProductButton">
-                    <mat-icon aria-label="Add Product">add</mat-icon>
-                  </button>
-                </div>
-                <div class="overlay" *ngIf="popup">
-                  <div class="popup">
-                    <h2>Add This Product to Your Pantry</h2>
-                    <a class="close" (click)="popup = false">&times;</a>
-                    <app-add-product-to-pantry [product]="this.product"></app-add-product-to-pantry>
+              <mat-action-list>
+                <mat-list-item *ngFor="let product of this.filteredProducts" class="add-product-list-item"
+                  data-test="addProductListItem">
+                  <p matLine class="add-product-list-name">{{product.product_name}}</p>
+                  <div matLine>
+                    <button mat-mini-fab (click)="openAddDialog(this.product)" color="accent" matTooltip="Add to Pantry"
+                      matTooltipPosition="left" data-test="addToPantryButton">
+                      <mat-icon>add</mat-icon>
+                    </button>
                   </div>
-                </div>
-              </mat-list-item>
+                </mat-list-item>
+              </mat-action-list>
             </div>
           </mat-nav-list>
         </mat-card-content>
@@ -82,15 +77,15 @@
                     </button>
 
                     <ng-template #dialogRef let-mydata>
-                    <h1 mat-dialog-title>Delete Product?</h1>
-                    <div mat-dialog-content>
-                      <h4>Are you sure you want to delete <i>{{tempName}}</i>? This action cannot be undone</h4>
-                    </div>
-                    <div mat-dialog-actions>
-                      <button mat-button color="warn" (click)="removeItem(tempId)">Delete</button>
-                      <button mat-button [mat-dialog-close]="" cdkFocusInitial>Cancel</button>
-                    </div>
-                  </ng-template>
+                      <h1 mat-dialog-title>Delete Product?</h1>
+                      <div mat-dialog-content>
+                        <h4>Are you sure you want to delete <i>{{tempName}}</i>? This action cannot be undone</h4>
+                      </div>
+                      <div mat-dialog-actions>
+                        <button mat-button color="warn" (click)="removeItem(tempId)">Delete</button>
+                        <button mat-button [mat-dialog-close]="" cdkFocusInitial>Cancel</button>
+                      </div>
+                    </ng-template>
                   </div>
                 </span>
               </mat-nav-list>
@@ -133,15 +128,15 @@
                     </button>
 
                     <ng-template #dialogRef let-mydata>
-                    <h1 mat-dialog-title>Delete Product?</h1>
-                    <div mat-dialog-content>
-                      <h4>Are you sure you want to delete <i>{{tempName}}</i>? This action cannot be undone</h4>
-                    </div>
-                    <div mat-dialog-actions>
-                      <button mat-button color="warn" (click)="removeItem(tempId)">Delete</button>
-                      <button mat-button [mat-dialog-close]="" cdkFocusInitial>Cancel</button>
-                    </div>
-                  </ng-template>
+                      <h1 mat-dialog-title>Delete Product?</h1>
+                      <div mat-dialog-content>
+                        <h4>Are you sure you want to delete <i>{{tempName}}</i>? This action cannot be undone</h4>
+                      </div>
+                      <div mat-dialog-actions>
+                        <button mat-button color="warn" (click)="removeItem(tempId)">Delete</button>
+                        <button mat-button [mat-dialog-close]="" cdkFocusInitial>Cancel</button>
+                      </div>
+                    </ng-template>
                   </div>
                 </span>
               </mat-nav-list>
